@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - jdbc
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'  # 根据你的项目需求选择合适的 JDK 版本
+          distribution: 'adopt'
+
+      - name: Run tests
+        run: ./gradlew test  # 如果你使用 Maven，可以替换为 `mvn test`
+
+      - name: Build JAR
+        run: ./gradlew build  # 如果你使用 Maven，可以替换为 `mvn package`
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-app
+          path: build/libs/*.jar  # 如果你使用 Maven，路径可能是 `target/*.jar`
