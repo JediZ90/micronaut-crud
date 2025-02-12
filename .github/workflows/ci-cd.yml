@@ -22,9 +22,6 @@ jobs:
           java-version: '21'  # 使用 JDK 21
           distribution: 'temurin'  # 推荐使用 Temurin 发行版
 
-      - name: Run tests
-        run: ./gradlew test  # 如果你使用 Maven，可以替换为 `mvn test`
-
       - name: Build JAR
         run: ./gradlew build  # 如果你使用 Maven，可以替换为 `mvn package`
 
